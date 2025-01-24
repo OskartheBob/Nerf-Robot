@@ -8,12 +8,16 @@ int potpin = 0;
 int val;    
 int E2 = 5;
 int M2 = 4;
+int motor_button = 2;
+int motor_speed = 6;
 
 void setup() {
   myservo.attach(9);  
   Serial.begin(115200);
   matrix.begin();
   pinMode(M2, OUTPUT);
+  pinMode(motor_button, INPUT_PULLUP);
+  pinMode(motor_speed, INPUT_PULLDOWN);
 }
 
 const uint32_t heart[] = {
@@ -29,13 +33,22 @@ void loop() {
   myservo.write(val);                  
   delay(15);                           
 
-int value;
-for(value = 0 ; value <= 255; value+=5)
-  {
-    digitalWrite(M2,HIGH);
-    analogWrite(E2, value);   //PWM Speed Control
-    delay(30);
+
+  if(digitalRead(motor_speed) == HIGH){
+    analogWrite(E2, 150);
   }
+    else{
+      analogWrite(E2, 0);
+    }
+
+  digitalWrite(M2, LOW);
+  /*if(digitalRead(motor_button) == HIGH){
+    digitalWrite(M2, HIGH);
+  }
+    else{
+      digitalWrite(M2, LOW);
+    }*/
+  
 
   matrix.loadFrame(heart);
 
