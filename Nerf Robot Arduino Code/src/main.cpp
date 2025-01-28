@@ -1,7 +1,6 @@
 #include <Servo.h>
-#include <Arduino_LED_Matrix.h>
+#include <Adafruit_MMA8451.h>
 
-ArduinoLEDMatrix matrix;
 Servo myservo;  
 
 int potpin = 0;  
@@ -14,17 +13,10 @@ int motor_speed = 6;
 void setup() {
   myservo.attach(9);  
   Serial.begin(115200);
-  matrix.begin();
   pinMode(M2, OUTPUT);
   pinMode(motor_button, INPUT_PULLUP);
   pinMode(motor_speed, INPUT_PULLDOWN);
 }
-
-const uint32_t heart[] = {
-  0x0001B024,
-  0x82081100,
-  0xA0040000
-};
 
 
 void loop() {
@@ -49,7 +41,4 @@ void loop() {
       digitalWrite(M2, LOW);
     }*/
   
-
-  matrix.loadFrame(heart);
-
 }
